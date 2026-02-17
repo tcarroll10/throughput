@@ -4,9 +4,13 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ApiKeyAuthFilter extends OncePerRequestFilter {
 
@@ -34,6 +38,10 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken("api-client", null,
+                            List.of(new SimpleGrantedAuthority("ROLE_API_CLIENT")));
+            SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request, response);
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
