@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tcarroll10</groupId>
-	<artifactId>throughPut</artifactId>
+	<artifactId>throughput</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>throughPut</name>
+	<name>throughput</name>
 	<description>Demo project for testing throughput and scalability in AWS</description>
 	<url/>
 	<licenses>
