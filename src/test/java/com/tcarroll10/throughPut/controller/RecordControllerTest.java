@@ -46,10 +46,7 @@ class RecordControllerTest {
 
     @Test
     void createRecords_batch_returnsCreated() throws Exception {
-        List<AccountingResult> results = List.of(
-                new AccountingResult("1", "payload-1", 1000L),
-                new AccountingResult("2", "payload-2", 2000L));
-        when(recordService.saveAll(anyList())).thenReturn(results);
+        when(recordService.saveAll(anyList())).thenReturn("test-batch-id");
 
         mockMvc.perform(post("/api/records/batch")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -60,8 +57,9 @@ class RecordControllerTest {
                                 ]
                                 """))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].id").value("1"))
-                .andExpect(jsonPath("$[1].id").value("2"));
+                .andExpect(jsonPath("$.batchId").value("test-batch-id"))
+                .andExpect(jsonPath("$.count").value(2))
+                .andExpect(jsonPath("$.records[0].id").value("1"))
+                .andExpect(jsonPath("$.records[1].id").value("2"));
     }
 }

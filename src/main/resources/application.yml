@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: throughput
+  datasource:
+    url: jdbc:postgresql://record-service-db.ctpjgijwnmfr.us-east-1.rds.amazonaws.com:5432/recordsdb?stringtype=unspecified
+    username: dbadmin
+    password: Gmu10bball
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false

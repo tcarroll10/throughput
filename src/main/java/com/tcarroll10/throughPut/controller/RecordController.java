@@ -1,6 +1,8 @@
 package com.tcarroll10.throughPut.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +31,12 @@ public class RecordController {
     }
 
     @PostMapping("/batch")
-    public ResponseEntity<List<AccountingResult>> createRecords(@RequestBody List<AccountingResult> records) {
-        List<AccountingResult> saved = recordService.saveAll(records);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    public ResponseEntity<Map<String, Object>> createRecords(@RequestBody List<AccountingResult> records) {
+        String batchId = recordService.saveAll(records);
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("batchId", batchId);
+        response.put("count", records.size());
+        response.put("records", records);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
